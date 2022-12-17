@@ -1,0 +1,149 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://avion.tscn" type="PackedScene" id=1]
+[ext_resource path="res://souffleur.tscn" type="PackedScene" id=2]
+[ext_resource path="res://main.gd" type="Script" id=3]
+[ext_resource path="res://assets/other/bg.jpeg" type="Texture" id=4]
+[ext_resource path="res://assets/other/3.png" type="Texture" id=5]
+[ext_resource path="res://assets/other/4.png" type="Texture" id=6]
+[ext_resource path="res://assets/other/1.png" type="Texture" id=7]
+[ext_resource path="res://assets/other/2.png" type="Texture" id=8]
+[ext_resource path="res://assets/other/pause2.png" type="Texture" id=9]
+[ext_resource path="res://assets/other/pause1.png" type="Texture" id=10]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 58 )
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 272.5, 19 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 10, 417 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 242.5, 11 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 10, 418 )
+
+[sub_resource type="Curve2D" id=7]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 25, -47, 0, 0, 0, 0, 457, -49 )
+}
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 5 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 1.0
+} ]
+
+[node name="main" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="game" type="Node2D" parent="."]
+
+[node name="bg" type="Sprite" parent="game"]
+self_modulate = Color( 0.901961, 0.901961, 0.901961, 1 )
+scale = Vector2( 0.283688, 0.3257 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="collisions" type="Node2D" parent="game"]
+
+[node name="limiteSouffleur" type="StaticBody2D" parent="game/collisions"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/collisions/limiteSouffleur"]
+position = Vector2( 5, 599 )
+shape = SubResource( 2 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="game/collisions/limiteSouffleur"]
+position = Vector2( 473, 603 )
+shape = SubResource( 2 )
+
+[node name="limiteAvionGameOver" type="Area2D" parent="game/collisions"]
+position = Vector2( 234, 551 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/collisions/limiteAvionGameOver"]
+position = Vector2( 12, 9 )
+shape = SubResource( 1 )
+
+[node name="limiteAvion" type="StaticBody2D" parent="game/collisions"]
+collision_layer = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="game/collisions/limiteAvion"]
+position = Vector2( 0, 112 )
+shape = SubResource( 4 )
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="game/collisions/limiteAvion"]
+position = Vector2( 237, -123 )
+shape = SubResource( 6 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="game/collisions/limiteAvion"]
+position = Vector2( 480, 117 )
+shape = SubResource( 5 )
+
+[node name="avion" parent="game" instance=ExtResource( 1 )]
+position = Vector2( 248, 160 )
+
+[node name="souffleur" parent="game" instance=ExtResource( 2 )]
+
+[node name="souffles" type="Node2D" parent="game"]
+
+[node name="obstacles" type="Node2D" parent="game"]
+
+[node name="spawnLine" type="Path2D" parent="game"]
+position = Vector2( 1, -102 )
+curve = SubResource( 7 )
+
+[node name="spawnPoint" type="PathFollow2D" parent="game/spawnLine"]
+position = Vector2( 25, -47 )
+rotation = -0.00462842
+rotate = false
+loop = false
+
+[node name="Timer" type="Timer" parent="game"]
+wait_time = 2.0
+autostart = true
+
+[node name="avionRespawn" type="Position2D" parent="game"]
+position = Vector2( 237, -61 )
+
+[node name="pause" type="TextureButton" parent="."]
+pause_mode = 2
+margin_left = 23.0
+margin_top = 20.0
+margin_right = 63.0
+margin_bottom = 60.0
+toggle_mode = true
+shortcut_in_tooltip = false
+texture_normal = ExtResource( 9 )
+texture_pressed = ExtResource( 10 )
+expand = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_left = -4.328
+anchor_top = -2.772
+margin_left = -24.0
+margin_top = -19.0
+margin_right = 515.0
+margin_bottom = 657.0
+color = Color( 0, 0, 0, 0.509804 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="countdown" type="AnimatedSprite" parent="."]
+position = Vector2( 239, 266 )
+scale = Vector2( 0.346294, 0.346294 )
+frames = SubResource( 3 )
+
+[connection signal="body_entered" from="game/collisions/limiteAvionGameOver" to="." method="_on_limite_body_entered"]
+[connection signal="out_of_bounds" from="game/avion" to="." method="_on_avion_out_of_bounds"]
+[connection signal="souffle_now" from="game/souffleur" to="." method="_on_souffleur_souffle_now"]
+[connection signal="timeout" from="game/Timer" to="." method="_on_Timer_timeout"]
+[connection signal="toggled" from="pause" to="." method="_on_pause_toggled"]
+[connection signal="animation_finished" from="countdown" to="." method="start"]
