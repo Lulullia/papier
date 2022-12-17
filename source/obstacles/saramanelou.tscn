@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/obstacles/saramanelou.png" type="Texture" id=2]
+
+[node name="saramanelou" instance=ExtResource( 1 )]
+mass = 18.4836
+gravity_scale = 2.0
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 0.188, 0.188 )
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+polygon = PoolVector2Array( -39, 64, 44, 62, 41, -1, 29, -65, -31, -62, -29, -14, -40, 15 )

@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/obstacles/lunettesnono.png" type="Texture" id=2]
+
+[node name="lunettesnono" instance=ExtResource( 1 )]
+mass = 0.0234694
+gravity_scale = 3.0
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 0.136585, 0.136585 )
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+polygon = PoolVector2Array( 0, -6, 15, -9, 29, -8, 26, 7, 15, 9, 8, 7, 0, -2, -7, 9, -16, 10, -24, 8, -29, -6, -15, -9 )

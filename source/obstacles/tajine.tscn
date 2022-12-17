@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/obstacles/tajine.png" type="Texture" id=2]
+
+[node name="tajine" instance=ExtResource( 1 )]
+mass = 64.518
+gravity_scale = 6.5
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 0.256198, 0.256198 )
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+position = Vector2( 0.0625752, -0.657509 )
+scale = Vector2( 0.262914, 0.263002 )
+polygon = PoolVector2Array( -61, -205, 15, -209, 17, -135, 160, 40, 206, 61, 229, 81, 222, 147, 131, 194, -17, 214, -134, 202, -201, 172, -224, 104, -163, 59, -57, -131 )

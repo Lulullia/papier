@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://obstacle.tscn" type="PackedScene" id=1]
+[ext_resource path="res://assets/obstacles/khabia.png" type="Texture" id=2]
+
+[node name="khabia" instance=ExtResource( 1 )]
+mass = 74.1316
+gravity_scale = 5.53
+
+[node name="Sprite" parent="." index="0"]
+scale = Vector2( 0.292, 0.292 )
+texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." index="1"]
+polygon = PoolVector2Array( -10, -116, 7, -117, 8, -107, 21, -103, 37, -55, 50, -43, 60, -20, 49, 31, 59, 42, 63, 76, 53, 107, 36, 112, 29, 101, 29, 90, -21, 94, -19, 109, -29, 123, -39, 120, -49, 95, -45, 49, -44, 22, -62, -18, -46, -44, -30, -58, -31, -74, -21, -103, -12, -106 )
